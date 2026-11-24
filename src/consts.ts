@@ -7,8 +7,11 @@ export const AUTHOR = 'Chuan';
 /** 網站描述，頁面未自訂 description 時作為預設的 `<meta name="description">`。 */
 export const SITE_DESCRIPTION = '記錄生活裡流過的日子。';
 
-/** 簡短的自我介紹，顯示於側欄（所有有側欄的頁面）與關於頁。 */
+/** 簡短的自我介紹，顯示於側欄（所有有側欄的頁面）。 */
 export const ABOUT_SHORT = '喜歡記錄生活的人，偶爾寫寫興趣和正在做的東西。';
+
+/** 作者的 GitHub 個人頁網址，顯示於關於頁的聯絡方式。 */
+export const GITHUB_URL = 'https://github.com/WinnixShih';
 
 /**
  * 文章分類定義。key 為文章 frontmatter 的 `category` 值，

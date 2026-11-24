@@ -1,14 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { ABOUT_SHORT } from '../consts';
+import { AUTHOR, GITHUB_URL } from '../consts';
 ---
 
 <BaseLayout title="關於我" showSidebar={false}>
   <div class="about">
     <h1 class="heading">關於我</h1>
     <div class="photo">照片</div>
-    <p>{ABOUT_SHORT}</p>
-    <p>這裡會記錄我的生活和興趣，之後也會放上自己做的專案。</p>
+    <p>我是 {AUTHOR}。</p>
+    <p>職場新鮮人，目前是一位後端工程師。喜歡吃好吃的，平常的興趣是運動打排球、追追劇，偶爾看看書。</p>
+    <p>正在探索人生，嘗試新鮮的事。想有一個自己的網站（所以有了這裡！），放一些心情小語、小專案和生活紀錄。</p>
+    <p class="contact">
+      找我：<a href={GITHUB_URL}>GitHub</a>
+    </p>
   </div>
 </BaseLayout>
 
