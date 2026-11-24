@@ -1,0 +1,75 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { CATEGORIES } from '../../consts';
+import { formatDate, getPublishedPosts } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const category = CATEGORIES[post.data.category];
+---
+
+<BaseLayout title={post.data.title} description={post.data.description} showSidebar={false}>
+  <article class="article">
+    <div class="meta">
+      <a
+        class="category"
+        href={`/category/${post.data.category}/`}
+        style={`color: ${category.color}`}>{category.label}</a
+      >
+      &emsp;&emsp;<span class="date">{formatDate(post.data.date)}</span>
+    </div>
+    <h1 class="title">{post.data.title}</h1>
+    <div class="prose">
+      <Content />
+    </div>
+    <p class="back"><a href="/">← 回到首頁</a></p>
+  </article>
+</BaseLayout>
+
+<style>
+  .article {
+    max-width: 40em;
+  }
+  .meta {
+    font-size: 0.85rem;
+  }
+  .date {
+    color: var(--faint);
+  }
+  .title {
+    margin: 6px 0 24px;
+    font-size: 1.8rem;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+  }
+  .prose {
+    line-height: 1.9;
+    overflow-wrap: anywhere;
+  }
+  .prose :global(pre) {
+    overflow-x: auto;
+  }
+  .prose :global(a) {
+    text-decoration: underline;
+  }
+  .prose :global(blockquote) {
+    margin: 1em 0;
+    padding-left: 1em;
+    border-left: 3px solid var(--line);
+    color: var(--muted);
+  }
+  .prose :global(h2),
+  .prose :global(h3) {
+    margin: 1.8em 0 0.6em;
+  }
+  .back {
+    margin-top: 40px;
+    color: var(--muted);
+  }
+</style>

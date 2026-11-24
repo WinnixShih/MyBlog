@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { ABOUT_SHORT } from '../consts';
+---
+
+<BaseLayout title="關於我" showSidebar={false}>
+  <div class="about">
+    <h1 class="heading">關於我</h1>
+    <div class="photo">照片</div>
+    <p>{ABOUT_SHORT}</p>
+    <p>這裡會記錄我的生活和興趣，之後也會放上自己做的專案。</p>
+  </div>
+</BaseLayout>
+
+<style>
+  .about {
+    max-width: 40em;
+    line-height: 1.9;
+  }
+  .heading {
+    margin: 0 0 20px;
+    font-size: 1.6rem;
+  }
+  .photo {
+    width: 100%;
+    max-width: 24em;
+    aspect-ratio: 4 / 3;
+    background: #d8d3c8;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    margin-bottom: 20px;
+  }
+</style>

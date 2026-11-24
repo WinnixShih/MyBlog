@@ -1,0 +1,96 @@
+---
+import '../styles/global.css';
+import Sidebar from '../components/Sidebar.astro';
+import { AUTHOR, CATEGORIES, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+interface Props {
+  title?: string;
+  description?: string;
+  showSidebar?: boolean;
+}
+
+const { title, description, showSidebar = true } = Astro.props;
+const pageTitle = title ? `${title}｜${SITE_TITLE}` : SITE_TITLE;
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="zh-Hant-TW">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description ?? SITE_DESCRIPTION} />
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <div class="page">
+      <header class="masthead">
+        <a class="site-name" href="/">{SITE_TITLE}</a>
+        <nav class="nav">
+          {Object.entries(CATEGORIES).map(([key, category]) => (
+            <>
+              <a href={`/category/${key}/`}>{category.label}</a> ／
+            </>
+          ))}
+          <a href="/about/">關於</a>
+        </nav>
+      </header>
+      <div class:list={['layout', { 'with-sidebar': showSidebar }]}>
+        <main class="main">
+          <slot />
+        </main>
+        {showSidebar && <Sidebar />}
+      </div>
+      <footer class="footer">© {year} {AUTHOR}</footer>
+    </div>
+  </body>
+</html>
+
+<style>
+  .page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+  .masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 24px 0 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .site-name {
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
+  .nav {
+    color: var(--muted);
+  }
+  .layout {
+    padding: 28px 0;
+  }
+  .layout.with-sidebar {
+    display: grid;
+    grid-template-columns: 2.2fr 1fr;
+    column-gap: 26px;
+  }
+  .main {
+    min-width: 0;
+  }
+  .footer {
+    border-top: 1px solid var(--line);
+    color: var(--faint);
+    font-size: 0.85rem;
+    padding: 16px 0 32px;
+  }
+  @media (max-width: 720px) {
+    .layout.with-sidebar {
+      grid-template-columns: 1fr;
+      row-gap: 28px;
+    }
+  }
+</style>

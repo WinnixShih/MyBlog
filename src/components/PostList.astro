@@ -1,0 +1,69 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { CATEGORIES } from '../consts';
+import { formatDate } from '../lib/posts';
+
+interface Props {
+  posts: CollectionEntry<'posts'>[];
+  emptyMessage?: string;
+}
+
+const { posts, emptyMessage = '這個分類還沒有文章。' } = Astro.props;
+---
+
+{
+  posts.length === 0 ? (
+    <p>{emptyMessage}</p>
+  ) : (
+    <div class="post-list">
+      {posts.map((post) => (
+        <article class="post-item">
+          <div class="meta">
+            <a
+              class="category"
+              href={`/category/${post.data.category}/`}
+              style={`color: ${CATEGORIES[post.data.category].color}`}
+            >
+              {CATEGORIES[post.data.category].label}
+            </a>
+            &emsp;&emsp;<span class="date">{formatDate(post.data.date)}</span>
+          </div>
+          <h2 class="title">
+            <a href={`/posts/${post.id}/`}>{post.data.title}</a>
+          </h2>
+          {post.data.description && <p class="description">{post.data.description}</p>}
+        </article>
+      ))}
+    </div>
+  )
+}
+
+<style>
+  .post-item {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .post-item:first-child {
+    padding-top: 0;
+  }
+  .post-item:last-child {
+    border-bottom: none;
+  }
+  .meta {
+    font-size: 0.85rem;
+  }
+  .date {
+    color: var(--faint);
+  }
+  .title {
+    margin: 4px 0 0;
+    font-size: 17px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+  }
+  .description {
+    margin: 6px 0 0;
+    color: var(--muted);
+    overflow-wrap: anywhere;
+  }
+</style>

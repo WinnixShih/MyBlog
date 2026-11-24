@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="找不到頁面">
+  <h1 class="heading">找不到這個頁面</h1>
+  <p>可能網址打錯了，或文章已經移走。</p>
+  <p class="back"><a href="/">← 回到首頁</a></p>
+</BaseLayout>
+
+<style>
+  .heading {
+    margin: 0 0 20px;
+    font-size: 1.6rem;
+  }
+  .back {
+    color: var(--muted);
+  }
+</style>

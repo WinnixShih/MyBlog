@@ -1,0 +1,47 @@
+---
+import { ABOUT_SHORT, AUTHOR } from '../consts';
+---
+
+<aside class="sidebar">
+  <div class="photo">照片</div>
+  <p class="greeting">嗨，我是 {AUTHOR}</p>
+  <p class="intro">{ABOUT_SHORT}</p>
+  <a class="more" href="/about/">更多關於我 →</a>
+</aside>
+
+<style>
+  .sidebar {
+    border-left: 1px solid var(--line);
+    padding-left: 26px;
+  }
+  .photo {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: #d8d3c8;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+  }
+  .greeting {
+    font-weight: 700;
+    margin: 12px 0 0;
+  }
+  .intro {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin: 4px 0 8px;
+  }
+  .more {
+    font-size: 0.9rem;
+  }
+  @media (max-width: 720px) {
+    .sidebar {
+      border-left: none;
+      border-top: 1px solid var(--line);
+      padding-left: 0;
+      padding-top: 20px;
+    }
+  }
+</style>
