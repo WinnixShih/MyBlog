@@ -15,12 +15,18 @@ const { label, color } = CATEGORIES[category];
 const posts = await getPublishedPosts(category);
 ---
 
-<BaseLayout title={label}>
-  <h1 class="heading" style={`color: ${color}`}>{label}</h1>
-  <PostList posts={posts} />
+<BaseLayout title={label} showSidebar={false}>
+  <div class="category">
+    <h1 class="heading" style={`color: ${color}`}>{label}</h1>
+    <PostList posts={posts} />
+  </div>
 </BaseLayout>
 
 <style>
+  .category {
+    max-width: 40em;
+  }
+
   .heading {
     margin: 0 0 20px;
     font-size: 1.6rem;
