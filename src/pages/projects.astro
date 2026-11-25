@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPublishedProjects } from '../lib/projects';
+
+const projects = await getPublishedProjects();
+---
+
+<BaseLayout title="專案" showSidebar={false}>
+  <div class="projects">
+    <h1 class="heading">專案</h1>
+    {
+      projects.length === 0 ? (
+        <p class="empty">還沒有專案，做好了會放在這裡。</p>
+      ) : (
+        projects.map((project) => (
+          <article class="project">
+            <div class="title-row">
+              <h2 class="title">{project.data.title}</h2>
+              <span class="year">{project.data.year}</span>
+            </div>
+            <p class="description">{project.data.description}</p>
+            {project.data.tech.length > 0 && <p class="tech">{project.data.tech.join('・')}</p>}
+            {(project.data.url || project.data.repo) && (
+              <p class="links">
+                {project.data.url && <a href={project.data.url}>看網頁 →</a>}
+                {project.data.repo && <a href={project.data.repo}>原始碼 →</a>}
+              </p>
+            )}
+          </article>
+        ))
+      )
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .projects {
+    max-width: 40em;
+  }
+  .heading {
+    margin: 0 0 20px;
+    font-size: 1.6rem;
+  }
+  .empty {
+    color: var(--muted);
+  }
+  .project {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .project:first-of-type {
+    padding-top: 0;
+  }
+  .project:last-of-type {
+    border-bottom: none;
+  }
+  .title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .title {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .year {
+    color: var(--faint);
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+  .description {
+    margin: 6px 0 0;
+    color: var(--muted);
+    overflow-wrap: anywhere;
+  }
+  .tech {
+    margin: 4px 0 0;
+    color: var(--faint);
+    font-size: 0.85rem;
+  }
+  .links {
+    margin: 8px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 20px;
+  }
+</style>
