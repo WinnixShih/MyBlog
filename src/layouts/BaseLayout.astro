@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 import Sidebar from '../components/Sidebar.astro';
-import { AUTHOR, CATEGORIES, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { AUTHOR, NAV_LINKS, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
 interface Props {
   title?: string;
@@ -30,13 +30,12 @@ const year = new Date().getFullYear();
       <header class="masthead">
         <a class="site-name" href="/">{SITE_TITLE}</a>
         <nav class="nav">
-          {Object.entries(CATEGORIES).map(([key, category]) => (
+          {NAV_LINKS.map((link, index) => (
             <>
-              <a href={`/category/${key}/`}>{category.label}</a> ／
+              {index > 0 && ' ／ '}
+              <a href={link.href}>{link.label}</a>
             </>
           ))}
-          <a href="/projects/">專案</a> ／
-          <a href="/about/">關於</a>
         </nav>
       </header>
       <div class:list={['layout', { 'with-sidebar': showSidebar }]}>

@@ -1,21 +1,12 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
-import type { CategoryKey } from '../consts';
 
 /**
  * 取得已發佈的文章。
  *
- * @param category 指定分類時只回傳該分類，省略則回傳全部。
  * @returns 排除草稿（`draft: true`）後的文章，依 `date` 由新到舊排序；`date` 相同時依 `id` 排序以保持順序穩定。
  */
-export async function getPublishedPosts(
-  category?: CategoryKey,
-): Promise<CollectionEntry<'posts'>[]> {
-  const posts = await getCollection('posts', (post) => {
-    if (post.data.draft) {
-      return false;
-    }
-    return category === undefined || post.data.category === category;
-  });
+export async function getPublishedPosts(): Promise<CollectionEntry<'posts'>[]> {
+  const posts = await getCollection('posts', (post) => !post.data.draft);
   return posts.sort((first, second) => {
     const dateDifference = second.data.date.valueOf() - first.data.date.valueOf();
     if (dateDifference !== 0) {

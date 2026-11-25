@@ -1,0 +1,79 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPublishedNotes } from '../lib/notes';
+import { formatDate } from '../lib/posts';
+
+const notes = await Promise.all(
+  (await getPublishedNotes()).map(async (note) => ({
+    note,
+    Content: (await render(note)).Content,
+  })),
+);
+---
+
+<BaseLayout title="小語" showSidebar={false}>
+  <div class="notes">
+    <h1 class="heading">小語</h1>
+    {
+      notes.length === 0 ? (
+        <p class="empty">還沒有小語。</p>
+      ) : (
+        notes.map(({ note, Content }) => (
+          <article class="note" id={note.id}>
+            <a class="date" href={`#${note.id}`}>
+              {formatDate(note.data.date)}
+            </a>
+            <div class="prose">
+              <Content />
+            </div>
+          </article>
+        ))
+      )
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .notes {
+    max-width: 40em;
+  }
+  .heading {
+    margin: 0 0 20px;
+    font-size: 1.6rem;
+  }
+  .empty {
+    color: var(--muted);
+  }
+  .note {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .note:first-of-type {
+    padding-top: 0;
+  }
+  .note:last-of-type {
+    border-bottom: none;
+  }
+  .date {
+    font-size: 0.85rem;
+    color: var(--faint);
+  }
+  .prose {
+    margin-top: 4px;
+    line-height: 1.9;
+    overflow-wrap: anywhere;
+  }
+  .prose :global(p) {
+    margin: 0 0 0.6em;
+  }
+  .prose :global(p:last-child) {
+    margin-bottom: 0;
+  }
+  .prose :global(a) {
+    text-decoration: underline;
+  }
+  .prose :global(pre) {
+    overflow-x: auto;
+  }
+</style>

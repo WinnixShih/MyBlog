@@ -1,6 +1,5 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { CATEGORIES } from '../consts';
 import { formatDate } from '../lib/posts';
 
 interface Props {
@@ -8,7 +7,7 @@ interface Props {
   emptyMessage?: string;
 }
 
-const { posts, emptyMessage = '這個分類還沒有文章。' } = Astro.props;
+const { posts, emptyMessage = '還沒有文章。' } = Astro.props;
 ---
 
 {
@@ -18,16 +17,7 @@ const { posts, emptyMessage = '這個分類還沒有文章。' } = Astro.props;
     <div class="post-list">
       {posts.map((post) => (
         <article class="post-item">
-          <div class="meta">
-            <a
-              class="category"
-              href={`/category/${post.data.category}/`}
-              style={`color: ${CATEGORIES[post.data.category].color}`}
-            >
-              {CATEGORIES[post.data.category].label}
-            </a>
-            &emsp;&emsp;<span class="date">{formatDate(post.data.date)}</span>
-          </div>
+          <div class="date">{formatDate(post.data.date)}</div>
           <h2 class="title">
             <a href={`/posts/${post.id}/`}>{post.data.title}</a>
           </h2>
@@ -49,10 +39,8 @@ const { posts, emptyMessage = '這個分類還沒有文章。' } = Astro.props;
   .post-item:last-child {
     border-bottom: none;
   }
-  .meta {
-    font-size: 0.85rem;
-  }
   .date {
+    font-size: 0.85rem;
     color: var(--faint);
   }
   .title {

@@ -1,7 +1,6 @@
 ---
 title: 第一篇：歡迎來到川流不息
 date: 2026-11-23
-category: life
 description: 這是一篇示範文章，說明怎麼寫新文章。
 ---
 
@@ -17,7 +16,6 @@ description: 這是一篇示範文章，說明怎麼寫新文章。
 
 - `title`：文章標題，必填。
 - `date`：發佈日期，格式為 `2026-11-23`，必填。
-- `category`：分類，只能是 `life`（生活）或 `hobby`（興趣），必填。
 - `description`：一句話摘要，選填。
 - `draft`：是否為草稿，選填，預設為 `false`。
 

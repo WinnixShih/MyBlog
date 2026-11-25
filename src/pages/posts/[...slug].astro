@@ -1,7 +1,6 @@
 ---
 import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { CATEGORIES } from '../../consts';
 import { formatDate, getPublishedPosts } from '../../lib/posts';
 
 export async function getStaticPaths() {
@@ -11,19 +10,11 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
-const category = CATEGORIES[post.data.category];
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description} showSidebar={false}>
   <article class="article">
-    <div class="meta">
-      <a
-        class="category"
-        href={`/category/${post.data.category}/`}
-        style={`color: ${category.color}`}>{category.label}</a
-      >
-      &emsp;&emsp;<span class="date">{formatDate(post.data.date)}</span>
-    </div>
+    <div class="date">{formatDate(post.data.date)}</div>
     <h1 class="title">{post.data.title}</h1>
     <div class="prose">
       <Content />
@@ -36,10 +27,8 @@ const category = CATEGORIES[post.data.category];
   .article {
     max-width: 40em;
   }
-  .meta {
-    font-size: 0.85rem;
-  }
   .date {
+    font-size: 0.85rem;
     color: var(--faint);
   }
   .title {

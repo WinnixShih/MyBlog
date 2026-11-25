@@ -1,9 +1,6 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
-import { CATEGORIES, type CategoryKey } from './consts';
-
-const categoryKeys = Object.keys(CATEGORIES) as [CategoryKey, ...CategoryKey[]];
 
 const posts = defineCollection({
   loader: glob({
@@ -15,8 +12,19 @@ const posts = defineCollection({
   schema: z.object({
     title: z.string(),
     date: z.coerce.date(),
-    category: z.enum(categoryKeys),
     description: z.string().optional(),
+    draft: z.boolean().default(false),
+  }),
+});
+
+const notes = defineCollection({
+  loader: glob({
+    pattern: '**/*.md',
+    base: './src/content/notes',
+    generateId: ({ entry }) => entry.replace(/\.md$/, ''),
+  }),
+  schema: z.object({
+    date: z.coerce.date(),
     draft: z.boolean().default(false),
   }),
 });
@@ -38,4 +46,4 @@ const projects = defineCollection({
   }),
 });
 
-export const collections = { posts, projects };
+export const collections = { posts, notes, projects };

@@ -13,14 +13,10 @@ export const ABOUT_SHORT = '喜歡記錄生活的人，偶爾寫寫興趣和正�
 /** 作者的 GitHub 個人頁網址，顯示於關於頁的聯絡方式。 */
 export const GITHUB_URL = 'https://github.com/WinnixShih';
 
-/**
- * 文章分類定義。key 為文章 frontmatter 的 `category` 值，
- * `label` 為顯示名稱，`color` 為該分類的代表色。
- */
-export const CATEGORIES = {
-  life: { label: '生活', color: '#b5482f' },
-  hobby: { label: '興趣', color: '#2f6a8a' },
-} as const;
-
-/** 分類 key 的聯集型別（`'life' | 'hobby'`）。 */
-export type CategoryKey = keyof typeof CATEGORIES;
+/** 頁首導覽列的連結，依陣列順序顯示。 */
+export const NAV_LINKS = [
+  { label: '小語', href: '/notes/' },
+  { label: '文章', href: '/' },
+  { label: '專案', href: '/projects/' },
+  { label: '關於', href: '/about/' },
+] as const;
