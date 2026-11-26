@@ -88,10 +88,33 @@ draft: false
 
 專案本身建議各自一個 repo、各自部署，這裡只放連結。
 
+## 網頁後台
+
+不想手寫 Markdown 時，可以用網頁後台（Keystatic）新增與編輯小語、文章、專案。
+
+| 環境 | 入口 | 存檔時 |
+| :-- | :-- | :-- |
+| 本機 | http://127.0.0.1:4321/keystatic | 直接修改專案裡的檔案 |
+| 正式 | https://my-blog-seven-sand.vercel.app/keystatic | commit 到 `main`，Vercel 自動部署，約一分鐘後上線 |
+
+- 正式環境要用 GitHub 登入，只有對這個 repo 有寫入權限的帳號才能存檔。
+- 正式環境需要四個環境變數，填在 Vercel 的 Environment Variables：`KEYSTATIC_GITHUB_CLIENT_ID`、`KEYSTATIC_GITHUB_CLIENT_SECRET`、`KEYSTATIC_SECRET`、`PUBLIC_KEYSTATIC_GITHUB_APP_SLUG`。
+第一次設定正式環境的 GitHub 登入：
+
+1. 在本機暫時把 `keystatic.config.ts` 的 storage 改成一律 `{ kind: 'github', repo: 'WinnixShih/MyBlog' }`（這個改動不要 commit）。
+2. `npm run dev`，打開 `http://127.0.0.1:4321/keystatic`，會出現建立 GitHub App 的引導。
+3. 引導中的 deployed URL 欄填 `https://my-blog-seven-sand.vercel.app`（沒填的話正式環境的 GitHub 登入會失敗），然後建立 App。
+4. 完成後四個值會自動寫進本機 `.env`（`.env` 已被 git 忽略）。
+5. 安裝 App 時選「Only select repositories」，只選 `MyBlog`。
+6. `git checkout keystatic.config.ts` 還原 storage 設定。
+7. 把 `.env` 的四個值填進 Vercel 專案的環境變數，只勾 Production。
+8. 在 Vercel 重新部署一次（`PUBLIC_KEYSTATIC_GITHUB_APP_SLUG` 是 build 時寫進去的，不重新部署不會生效）。
+
 ## 專案結構
 
 | 路徑 | 用途 |
 | :-- | :-- |
+| `keystatic.config.ts` | 網頁後台的設定（欄位、儲存位置） |
 | `src/content/` | 小語、文章、專案的 Markdown 檔 |
 | `src/pages/` | 各頁面與路由（首頁、小語、文章、專案、關於、404） |
 | `src/components/` | 共用元件（側欄、文章列表） |
