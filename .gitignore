@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # brainstorming mockups
 .superpowers/
+
+# vercel build output
+.vercel/
