@@ -80,7 +80,20 @@ draft: false
 
 ## 加專案
 
-複製 `src/content/projects/example.md`，改成自己的專案內容，並刪掉 `draft: true`。
+最簡單的方式是到網頁後台的「專案」新增。手寫的話，在 `src/content/projects/` 新增一個 `.md` 檔，檔名用英文小寫加連字號，例如 `my-project.md`：
+
+```md
+---
+title: 我的小專案
+description: 一句話介紹這個專案。
+year: 2026
+tech: [Astro, TypeScript]
+url: https://example.com
+repo: https://github.com/WinnixShih/my-project
+---
+```
+
+欄位說明：
 
 - `title`、`description`、`year`：名稱、一句話介紹、年份，必填。
 - `tech`：用到的技術，選填，例如 `[Astro, TypeScript]`。
@@ -105,7 +118,7 @@ draft: false
 2. `npm run dev`，打開 `http://127.0.0.1:4321/keystatic`，會出現建立 GitHub App 的引導。
 3. 引導中的 deployed URL 欄填 `https://my-blog-seven-sand.vercel.app`（沒填的話正式環境的 GitHub 登入會失敗），然後建立 App。
 4. 完成後四個值會自動寫進本機 `.env`（`.env` 已被 git 忽略）。
-5. 安裝 App 時選「Only select repositories」，只選 `MyBlog`。
+5. 安裝 App 時選「Only select repositories」，只選 `MyBlog`。裝完 GitHub 會跳回 `127.0.0.1`，本機伺服器沒開時顯示連不上是正常的。到 https://github.com/settings/installations 確認清單裡有這個 App；沒裝的話登入和瀏覽都正常，但存檔會出現「The GitHub App is unable to commit to the repository」。
 6. `git checkout keystatic.config.ts` 還原 storage 設定。
 7. 把 `.env` 的四個值填進 Vercel 專案的環境變數，只勾 Production。
 8. 在 Vercel 重新部署一次（`PUBLIC_KEYSTATIC_GITHUB_APP_SLUG` 是 build 時寫進去的，不重新部署不會生效）。
